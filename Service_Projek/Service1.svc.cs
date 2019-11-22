@@ -12,7 +12,7 @@ namespace Service_Projek
 {
     public class Service1 : IService1
     {
-        //BARANG
+        //BARANG-
         public List<dataBarang> GetSemuaBarang()
         {
             List<dataBarang> list = new List<dataBarang>();
