@@ -148,7 +148,7 @@ namespace Service_Projek
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "gettransaksi/idUser={IdUser}"
           )]
-        dataTransaksi GetTransaksi(string idUser);
+        List<dataTransaksi> GetTransaksi(string idUser);
 
         [OperationContract]
         [WebInvoke(

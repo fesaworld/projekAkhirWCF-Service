@@ -271,32 +271,31 @@ namespace Service_Projek
         //ADMIN
         public dataAdmin GetAdmin(string id)
         {
-            dataAdmin DataAdmin = new dataAdmin();
+            dataAdmin admin = new dataAdmin();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from Admin where ID__Admin =" + id, con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                DataAdmin.ID_Admin = reader.GetInt32(0);
-                DataAdmin.Nama_Admin = reader.GetString(1);
-                DataAdmin.Password = reader.GetString(2);
+                admin.ID_Admin = reader.GetInt32(0);
+                admin.Nama_Admin = reader.GetString(1);
+                admin.Password = reader.GetString(2);
             }
             con.Close();
-            return DataAdmin;
+            return admin;
         }
 
         //USER
         public dataUser GetUser(string id)
         {
-            dataUser DataUser = new dataUser();
+            dataUser user = new dataUser();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("SELECT * FROM .[dbo].[User] where ID_User =" + id, con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                dataUser user = new dataUser();
                 user.ID_User = reader.GetInt32(0);
                 user.Nama_User = reader.GetString(1);
                 user.Password = reader.GetString(2);
@@ -304,7 +303,7 @@ namespace Service_Projek
                 user.No_Telpon = reader.GetString(4);
             }
             con.Close();
-            return DataUser;
+            return user;
         }
 
         public string AddUser(dataUser du)
@@ -375,26 +374,39 @@ namespace Service_Projek
         }
 
         //TRANSAKSI
-        public dataTransaksi GetTransaksi(string idUser)
+        public List<dataTransaksi> GetTransaksi(string idUser)
         {
-            dataTransaksi DataTransaksi = new dataTransaksi();
+            List<dataTransaksi> list = new List<dataTransaksi>();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from Transaksi where ID_User=" + idUser, con);
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                dataTransaksi Transaksi = new dataTransaksi();
-                Transaksi.ID_Transaksi = reader.GetInt32(0);
-                Transaksi.ID_User = reader.GetInt32(0);
-                Transaksi.ID_Barang = reader.GetInt32(0);
-                Transaksi.ID_Admin = reader.GetInt32(0);
-                Transaksi.Total_Harga = reader.GetInt32(4);
-                Transaksi.Tanggal_Transaksi = reader.GetDateTime(5);
-                Transaksi.Status = reader.GetString(6);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dataTransaksi transaksi = new dataTransaksi();
+                        transaksi.ID_Transaksi = reader.GetInt32(0);
+                        transaksi.ID_User = reader.GetInt32(0);
+                        transaksi.ID_Barang = reader.GetInt32(0);
+                        transaksi.ID_Admin = reader.GetInt32(0);
+                        transaksi.Total_Harga = reader.GetInt32(4);
+                        transaksi.Tanggal_Transaksi = reader.GetDateTime(5);
+                        transaksi.Status = reader.GetString(6);
+                        list.Add(transaksi);
+
+                    }
+                    con.Close();
+                }
             }
-            con.Close();
-            return DataTransaksi;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return list;
         }
 
         public string AddTransaksi(dataTransaksi dt)
