@@ -46,7 +46,7 @@ namespace Service_Projek
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "getbarangjenis/jenis={Jenis}"
           )]
-        dataBarang GetBarangJenis(string jenis);
+        List<dataBarang> GetBarangJenis(string jenis);
 
         [OperationContract]
         [WebInvoke(
@@ -55,7 +55,7 @@ namespace Service_Projek
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "getbarangmerek/merek={Merek}"
           )]
-        dataBarang GetBarangMerek(string merek);
+        List<dataBarang> GetBarangMerek(string merek);
 
         [OperationContract]
         [WebInvoke(
@@ -64,7 +64,7 @@ namespace Service_Projek
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "getbarangnamajenismerek/nama={Nama}/jenis={Jenis}/merek={Merek}"
           )]
-        dataBarang GetBarangNamaJenisMerek(string nama, string jenis, string merek);
+        List<dataBarang> GetBarangNamaJenisMerek(string nama, string jenis, string merek);
 
         [OperationContract]
         [WebInvoke(

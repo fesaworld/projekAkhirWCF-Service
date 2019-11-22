@@ -33,7 +33,7 @@ namespace Service_Projek
                         barang.Merek = reader.GetString(3);
                         barang.Harga = reader.GetInt32(4);
                         barang.Stok = reader.GetInt32(5);
-                        barang.Foto = reader.GetByte(6);
+                        //barang.Foto = reader.GetByte(6);
                         list.Add(barang);
                     }
                     con.Close();
@@ -48,14 +48,13 @@ namespace Service_Projek
 
         public dataBarang GetBarangID(string id)
         {
-            dataBarang DataBarang = new dataBarang();
+            dataBarang barang = new dataBarang();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from Barang where ID_Barang=" + id, con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                dataBarang barang = new dataBarang();
                 barang.ID_Barang = reader.GetInt32(0);
                 barang.Nama_Barang = reader.GetString(1);
                 barang.Jenis_Barang = reader.GetString(2);
@@ -65,7 +64,7 @@ namespace Service_Projek
                 //barang.Foto = reader.GetByte(6);
             }
             con.Close();
-            return DataBarang;
+            return barang;
         }
 
         public List<dataBarang> GetBarangNama(string nama)
@@ -88,7 +87,7 @@ namespace Service_Projek
                         barang.Merek = reader.GetString(3);
                         barang.Harga = reader.GetInt32(4);
                         barang.Stok = reader.GetInt32(5);
-                        barang.Foto = reader.GetByte(6);
+                        //barang.Foto = reader.GetByte(6);
                         list.Add(barang);
                     }
                     con.Close();
@@ -101,70 +100,105 @@ namespace Service_Projek
             return list;
         }
         
-        public dataBarang GetBarangJenis(string jenis)
+        public List<dataBarang> GetBarangJenis(string jenis)
         {
-            dataBarang DataBarang = new dataBarang();
+            List<dataBarang> list = new List<dataBarang>();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from Barang where Jenis_Barang LIKE '%" + jenis + "%'", con);
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                dataBarang barang = new dataBarang();
-                barang.ID_Barang = reader.GetInt32(0);
-                barang.Nama_Barang = reader.GetString(1);
-                barang.Jenis_Barang = reader.GetString(2);
-                barang.Merek = reader.GetString(3);
-                barang.Harga = reader.GetInt32(4);
-                barang.Stok = reader.GetInt32(5);
-                barang.Foto = reader.GetByte(6);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dataBarang barang = new dataBarang();
+                        barang.ID_Barang = reader.GetInt32(0);
+                        barang.Nama_Barang = reader.GetString(1);
+                        barang.Jenis_Barang = reader.GetString(2);
+                        barang.Merek = reader.GetString(3);
+                        barang.Harga = reader.GetInt32(4);
+                        barang.Stok = reader.GetInt32(5);
+                        //barang.Foto = reader.GetByte(6);
+                        list.Add(barang);
+                    }
+                    con.Close();
+                }
             }
-            con.Close();
-            return DataBarang;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return list;
         }
 
-        public dataBarang GetBarangMerek(string merek)
+        public List<dataBarang> GetBarangMerek(string merek)
         {
-            dataBarang DataBarang = new dataBarang();
+            List<dataBarang> list = new List<dataBarang>();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from Barang where Merek LIKE '%" + merek + "%'", con);
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                dataBarang barang = new dataBarang();
-                barang.ID_Barang = reader.GetInt32(0);
-                barang.Nama_Barang = reader.GetString(1);
-                barang.Jenis_Barang = reader.GetString(2);
-                barang.Merek = reader.GetString(3);
-                barang.Harga = reader.GetInt32(4);
-                barang.Stok = reader.GetInt32(5);
-                barang.Foto = reader.GetByte(6);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dataBarang barang = new dataBarang();
+                        barang.ID_Barang = reader.GetInt32(0);
+                        barang.Nama_Barang = reader.GetString(1);
+                        barang.Jenis_Barang = reader.GetString(2);
+                        barang.Merek = reader.GetString(3);
+                        barang.Harga = reader.GetInt32(4);
+                        barang.Stok = reader.GetInt32(5);
+                        //barang.Foto = reader.GetByte(6);
+                        list.Add(barang);
+                    }
+                    con.Close();
+                }
             }
-            con.Close();
-            return DataBarang;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return list;
+
         }
 
-        public dataBarang GetBarangNamaJenisMerek(string nama, string jenis, string merek)
+        public List<dataBarang> GetBarangNamaJenisMerek(string nama, string jenis, string merek)
         {
-            dataBarang DataBarang = new dataBarang();
+            List<dataBarang> list = new List<dataBarang>();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from Barang where Nama_Barang LIKE '%"+ nama +"%' and Jenis_Barang LIKE '%"+ jenis +"%' and Merek LIKE '%"+ merek +"%'", con);
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                dataBarang barang = new dataBarang();
-                barang.ID_Barang = reader.GetInt32(0);
-                barang.Nama_Barang = reader.GetString(1);
-                barang.Jenis_Barang = reader.GetString(2);
-                barang.Merek = reader.GetString(3);
-                barang.Harga = reader.GetInt32(4);
-                barang.Stok = reader.GetInt32(5);
-                barang.Foto = reader.GetByte(6);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dataBarang barang = new dataBarang();
+                        barang.ID_Barang = reader.GetInt32(0);
+                        barang.Nama_Barang = reader.GetString(1);
+                        barang.Jenis_Barang = reader.GetString(2);
+                        barang.Merek = reader.GetString(3);
+                        barang.Harga = reader.GetInt32(4);
+                        barang.Stok = reader.GetInt32(5);
+                        //barang.Foto = reader.GetByte(6);
+                        list.Add(barang);
+                    }
+                    con.Close();
+                }
             }
-            con.Close();
-            return DataBarang;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return list;
+
         }
 
         public string AddBarang(dataBarang db)
@@ -217,7 +251,7 @@ namespace Service_Projek
             string query = string.Format("DELETE FROM Barang WHERE ID_Barang=" + id);
 
             dataBarang DataBarang = new dataBarang();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Rest;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
 
             try
@@ -239,15 +273,14 @@ namespace Service_Projek
         {
             dataAdmin DataAdmin = new dataAdmin();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-            SqlCommand cmd = new SqlCommand("select * from Barang where ID_Admin=" + id, con);
+            SqlCommand cmd = new SqlCommand("select * from Admin where ID__Admin =" + id, con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                dataAdmin admin = new dataAdmin();
-                admin.ID_Admin = reader.GetInt32(0);
-                admin.Nama_Admin = reader.GetString(1);
-                admin.Password = reader.GetString(2);
+                DataAdmin.ID_Admin = reader.GetInt32(0);
+                DataAdmin.Nama_Admin = reader.GetString(1);
+                DataAdmin.Password = reader.GetString(2);
             }
             con.Close();
             return DataAdmin;
@@ -258,7 +291,7 @@ namespace Service_Projek
         {
             dataUser DataUser = new dataUser();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-            SqlCommand cmd = new SqlCommand("select * from User where ID_User=" + id, con);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM .[dbo].[User] where ID_User =" + id, con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
