@@ -109,13 +109,13 @@ namespace Service_Projek
           Method = "GET",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "getuser/id={Id}"
+           UriTemplate = "getuser/nama={Nama}"
           )]
-        dataUser GetUser(string id);
+        dataUser GetUser(string Nama);
 
         [OperationContract]
         [WebInvoke(
-          Method = "PUT",
+          Method = "POST",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "adduser"
@@ -161,7 +161,7 @@ namespace Service_Projek
 
         [OperationContract]
         [WebInvoke(
-          Method = "PUT",
+          Method = "POST",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "addtransaksi"
