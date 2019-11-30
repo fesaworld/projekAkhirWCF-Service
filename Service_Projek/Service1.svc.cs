@@ -201,52 +201,52 @@ namespace Service_Projek
 
         }
 
-        public string AddBarang(dataBarang db)
+        public void AddBarang(dataBarang db)
         {
-            string query = string.Format("insert into Barang values({0},{1},{2},{3},{4},{5},{6})", db.ID_Barang, db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok, db.Foto);
+            string query = string.Format("insert into Barang values ('{0}', '{1}', '{2}', {3}, {4}, null)", db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok);
 
             dataBarang DataBarang = new dataBarang();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Rest;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
 
-            try
-            {
+            //try
+            //{
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
-                return "Data Berhasil Di Tambahkan";
-            }
-            catch (Exception ex)
-            {
+                //return "Data Berhasil Di Tambahkan";
+            //}
+            //catch (Exception ex)
+            //{
 
-                return "Data Gagal Ditambahkan : " + ex.ToString();
-            }
+                //return "Data Gagal Ditambahkan : " + ex.ToString();
+            //}
         }
 
-        public string UpdateBarang(dataBarang db)
+        public void UpdateBarang(dataBarang db)
         {
-            string query = string.Format("update Barang set Nama_Barang='{1}', Jenis_Barang='{2}', Merek='{3}', Harga='{4}', Stok='{5}', Foto='{6}' where ID_Barang={0} ", db.ID_Barang, db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok, db.Foto);
+            string query = string.Format("update Barang set Nama_Barang='{1}', Jenis_Barang='{2}', Merek='{3}', Harga={4}, Stok={5} where ID_Barang={0} ", db.ID_Barang, db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok);
 
             dataBarang DataBarangdpp = new dataBarang();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Rest;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
 
-            try
-            {
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-                return "Berhasil Di Update";
-            }
-            catch (Exception ex)
-            {
+            //try
+            //{
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+            //    return "Berhasil Di Update";
+            //}
+            //catch (Exception ex)
+            //{
 
-                return "Gagal Di Update :" + ex.ToString();
-            }
+            //    return "Gagal Di Update :" + ex.ToString();
+            //}
 
         }
 
-        public string HapusBarang(string id)
+        public void HapusBarang(string id)
         {
             string query = string.Format("DELETE FROM Barang WHERE ID_Barang=" + id);
 
@@ -254,26 +254,17 @@ namespace Service_Projek
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
 
-            try
-            {
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
-                return "Berhasil Di Hapus";
-            }
-            catch (Exception ex)
-            {
-
-                return "Gagal Di Hapus :" + ex.ToString();
-            }
         }
 
         //ADMIN
-        public dataAdmin GetAdmin(string id)
+        public dataAdmin GetAdmin(string nama)
         {
             dataAdmin admin = new dataAdmin();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-            SqlCommand cmd = new SqlCommand("select * from Admin where ID__Admin =" + id, con);
+            SqlCommand cmd = new SqlCommand("select * from Admin where Nama_Admin ='"+nama+"'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -374,6 +365,39 @@ namespace Service_Projek
         }
 
         //TRANSAKSI
+        public List<dataTransaksi> GetSemuaTransaksi()
+        {
+            List<dataTransaksi> list = new List<dataTransaksi>();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand("select Transaksi.ID_Transaksi, [User].Nama_User, Barang.Nama_Barang, Admin.Nama_Admin, Transaksi.Tanggal_Transaksi, Transaksi.Total_Harga, [User].Alamat, Transaksi.Status from Transaksi join [User] on Transaksi.ID_User = [User].ID_User join Admin on Transaksi.ID_Admin = Admin.ID__Admin join Barang on Transaksi.ID_Barang = barang.ID_Barang", con);
+            try
+            {
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dataTransaksi transaksi = new dataTransaksi();
+                        transaksi.ID_Transaksi = reader.GetInt32(0);
+                        transaksi.ID_User = reader.GetInt32(1);
+                        transaksi.ID_Barang = reader.GetInt32(2);
+                        transaksi.ID_Admin = reader.GetInt32(3);
+                        transaksi.Total_Harga = reader.GetInt32(4);
+                        transaksi.Tanggal_Transaksi = reader.GetDateTime(5);
+                        transaksi.Status = reader.GetString(6);
+                        list.Add(transaksi);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return list;
+        }
+
         public List<dataTransaksi> GetTransaksi(string idUser)
         {
             List<dataTransaksi> list = new List<dataTransaksi>();
