@@ -86,7 +86,7 @@ namespace Service_Projek
 
         [OperationContract]
         [WebInvoke(
-          Method = "POST",
+          Method = "PUT",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "deletebarang/id={Id}"
