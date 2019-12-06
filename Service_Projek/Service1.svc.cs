@@ -12,12 +12,11 @@ namespace Service_Projek
 {
     public class Service1 : IService1
     {
-        SqlConnection con = new SqlConnection("Data Source=NURLIATEGARAPRI;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=aprinne");
         //BARANG-
         public List<dataBarang> GetSemuaBarang()
         {
             List<dataBarang> list = new List<dataBarang>();
-           
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from Barang", con);
             try
             {
@@ -50,7 +49,7 @@ namespace Service_Projek
         public dataBarang GetBarangID(string id)
         {
             dataBarang barang = new dataBarang();
-            
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from Barang where ID_Barang=" + id, con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
@@ -71,7 +70,7 @@ namespace Service_Projek
         public List<dataBarang> GetBarangNama(string nama)
         {
             List<dataBarang> list = new List<dataBarang>();
-            
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from Barang where Nama_Barang LIKE '%" + nama + "%'", con);
             try
             {
@@ -100,11 +99,11 @@ namespace Service_Projek
             }
             return list;
         }
-        
+
         public List<dataBarang> GetBarangJenis(string jenis)
         {
             List<dataBarang> list = new List<dataBarang>();
-            
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from Barang where Jenis_Barang LIKE '%" + jenis + "%'", con);
             try
             {
@@ -137,7 +136,7 @@ namespace Service_Projek
         public List<dataBarang> GetBarangMerek(string merek)
         {
             List<dataBarang> list = new List<dataBarang>();
-            
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from Barang where Merek LIKE '%" + merek + "%'", con);
             try
             {
@@ -171,8 +170,8 @@ namespace Service_Projek
         public List<dataBarang> GetBarangNamaJenisMerek(string nama, string jenis, string merek)
         {
             List<dataBarang> list = new List<dataBarang>();
-            
-            SqlCommand cmd = new SqlCommand("select * from Barang where Nama_Barang LIKE '%"+ nama +"%' and Jenis_Barang LIKE '%"+ jenis +"%' and Merek LIKE '%"+ merek +"%'", con);
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand("select * from Barang where Nama_Barang LIKE '%" + nama + "%' and Jenis_Barang LIKE '%" + jenis + "%' and Merek LIKE '%" + merek + "%'", con);
             try
             {
                 con.Open();
@@ -207,29 +206,29 @@ namespace Service_Projek
             string query = string.Format("insert into Barang values ('{0}', '{1}', '{2}', {3}, {4}, '{5}')", db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok, db.Foto);
 
             dataBarang DataBarang = new dataBarang();
-            
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
 
             //try
             //{
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-                //return "Data Berhasil Di Tambahkan";
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+            //return "Data Berhasil Di Tambahkan";
             //}
             //catch (Exception ex)
             //{
 
-                //return "Data Gagal Ditambahkan : " + ex.ToString();
+            //return "Data Gagal Ditambahkan : " + ex.ToString();
             //}
         }
 
         public void UpdateBarang(dataBarang db)
         {
-            string query = string.Format("update Barang set Nama_Barang='{1}', Jenis_Barang='{2}', Merek='{3}', Harga={4}, Stok={5}, Foto='{6}' where ID_Barang={0} ", db.ID_Barang, db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok, db.Foto );
+            string query = string.Format("update Barang set Nama_Barang='{1}', Jenis_Barang='{2}', Merek='{3}', Harga={4}, Stok={5}, Foto='{6}' where ID_Barang={0} ", db.ID_Barang, db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok, db.Foto);
 
             dataBarang DataBarangdpp = new dataBarang();
-            
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
 
             //try
@@ -252,20 +251,20 @@ namespace Service_Projek
             string query = string.Format("DELETE FROM Barang WHERE ID_Barang=" + id);
 
             dataBarang DataBarang = new dataBarang();
-            
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
 
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
         }
 
         //ADMIN
         public dataAdmin GetAdmin(string nama)
         {
             dataAdmin admin = new dataAdmin();
-            
-            SqlCommand cmd = new SqlCommand("select * from Admin where Nama_Admin ='"+nama+"'", con);
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand("select * from Admin where Nama_Admin ='" + nama + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -279,19 +278,11 @@ namespace Service_Projek
         }
 
         //USER
-<<<<<<< HEAD
         public dataPengguna GetUser(string id)
         {
             dataPengguna user = new dataPengguna();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("SELECT * FROM Pengguna where ID_User =" + id, con);
-=======
-        public dataUser GetUser(string Nama)
-        {
-            dataUser user = new dataUser();
-            
-            SqlCommand cmd = new SqlCommand("SELECT * FROM .[dbo].[Pengguna] where Nama_User ='" + Nama +"'", con);
->>>>>>> 8bfc965dbc678919c4bd13e4c41a22b15a28be0b
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -299,7 +290,8 @@ namespace Service_Projek
                 user.ID_User = reader.GetInt32(0);
                 user.Nama_User = reader.GetString(1);
                 user.Password = reader.GetString(2);
-                
+                user.Alamat = reader.GetString(3);
+                user.No_Telpon = reader.GetString(4);
             }
             con.Close();
             return user;
@@ -307,7 +299,6 @@ namespace Service_Projek
 
         public int updatehp(string h)
         {
-<<<<<<< HEAD
             int hp = -1;
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select ID_User from Pengguna where No_Telpon='" + h + "'", con);
@@ -338,12 +329,6 @@ namespace Service_Projek
 
             dataPengguna DataUser = new dataPengguna();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Rest;Persist Security Info=True;User ID=sa;Password=123456");
-=======
-            string query = string.Format("insert into pengguna([Nama_User],[Password],[Alamat],[No_Telpon]) values('{0}','{1}','{2}','{3}')", du.Nama_User, du.Password, du.Alamat, du.No_Telpon);
-
-            dataUser DataUser = new dataUser();
-            
->>>>>>> 8bfc965dbc678919c4bd13e4c41a22b15a28be0b
             SqlCommand cmd = new SqlCommand(query, con);
 
             try
@@ -364,13 +349,8 @@ namespace Service_Projek
         {
             string query = string.Format("update Pengguna set Nama_User='{1}', Password='{2}', Alamat='{3}', No_Telpon='{4}' where ID_Barang={0} ", du.ID_User, du.Nama_User, du.Password, du.Alamat, du.No_Telpon);
 
-<<<<<<< HEAD
             dataPengguna DataUser = new dataPengguna();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Rest;Persist Security Info=True;User ID=sa;Password=123456");
-=======
-            dataUser DataUser = new dataUser();
-            
->>>>>>> 8bfc965dbc678919c4bd13e4c41a22b15a28be0b
             SqlCommand cmd = new SqlCommand(query, con);
 
             try
@@ -392,14 +372,9 @@ namespace Service_Projek
         {
             string query = string.Format("DELETE FROM Pengguna WHERE ID_User=" + id);
 
-<<<<<<< HEAD
             dataPengguna DataUser = new dataPengguna();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Rest;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
-=======
-            dataUser DataUser = new dataUser();
-                 SqlCommand cmd = new SqlCommand(query, con);
->>>>>>> 8bfc965dbc678919c4bd13e4c41a22b15a28be0b
 
             try
             {
@@ -419,12 +394,8 @@ namespace Service_Projek
         public List<dataTransaksi> GetSemuaTransaksi()
         {
             List<dataTransaksi> list = new List<dataTransaksi>();
-<<<<<<< HEAD
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select Transaksi.ID_Transaksi, Pengguna.Nama_User, Barang.Nama_Barang, Admin.Nama_Admin, Transaksi.Tanggal_Transaksi, Transaksi.Total_Harga, Pengguna.Alamat, Transaksi.Status from Transaksi join Pengguna on Transaksi.ID_User = Pengguna.ID_User join Admin on Transaksi.ID_Admin = Admin.ID__Admin join Barang on Transaksi.ID_Barang = barang.ID_Barang", con);
-=======
-            SqlCommand cmd = new SqlCommand("select Transaksi.ID_Transaksi, [User].Nama_User, Barang.Nama_Barang, Admin.Nama_Admin, Transaksi.Tanggal_Transaksi, Transaksi.Total_Harga, [User].Alamat, Transaksi.Status from Transaksi join [User] on Transaksi.ID_User = [User].ID_User join Admin on Transaksi.ID_Admin = Admin.ID__Admin join Barang on Transaksi.ID_Barang = barang.ID_Barang", con);
->>>>>>> 8bfc965dbc678919c4bd13e4c41a22b15a28be0b
             try
             {
                 con.Open();
@@ -456,12 +427,8 @@ namespace Service_Projek
         public List<dataTransaksi> GetTransaksi(string idUser)
         {
             List<dataTransaksi> list = new List<dataTransaksi>();
-<<<<<<< HEAD
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(" SELECT * FROM Transaksi" + idUser, con);
-=======
-            SqlCommand cmd = new SqlCommand("select * from Transaksi where ID_User=" + idUser, con);
->>>>>>> 8bfc965dbc678919c4bd13e4c41a22b15a28be0b
             try
             {
                 con.Open();
@@ -497,7 +464,8 @@ namespace Service_Projek
             string query = string.Format("insert into Transaksi values({0},{1},{2},{3},{4},{5},{6})", dt.ID_Transaksi, dt.ID_User, dt.ID_Barang, dt.ID_Admin, dt.Total_Harga, dt.Tanggal_Transaksi, dt.Status);
 
             dataTransaksi DataTransaksi = new dataTransaksi();
-           SqlCommand cmd = new SqlCommand(query, con);
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Rest;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand(query, con);
 
             try
             {
@@ -512,21 +480,13 @@ namespace Service_Projek
                 return "Data Gagal Ditambahkan : " + ex.ToString();
             }
         }
-        
+
         //VIEW TRANSAKSI
         public List<dataView> GetSemuaTransaksiView()
         {
-<<<<<<< HEAD
             List<dataView> list = new List<dataView>();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from ViewTransaksi", con);
-=======
-            string query = string.Format("update Transaksi set ID_User='{1}', ID_Barang='{2}', ID_Admin='{3}', Total_Harga='{4}', Tanggal_Transaksi='{5}', Status='{6}' where ID_Transaksi={0} ", dt.ID_Transaksi, dt.ID_User, dt.ID_Barang, dt.ID_Admin, dt.Total_Harga, dt.Tanggal_Transaksi, dt.Status);
-
-            dataTransaksi DataTransaksi = new dataTransaksi();
-            SqlCommand cmd = new SqlCommand(query, con);
-
->>>>>>> 8bfc965dbc678919c4bd13e4c41a22b15a28be0b
             try
             {
                 con.Open();
@@ -559,7 +519,6 @@ namespace Service_Projek
 
         public List<dataView> GetSemuaTransaksiViewUser(string nama)
         {
-<<<<<<< HEAD
             List<dataView> list = new List<dataView>();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from ViewTransaksi where Nama_User LIKE '%" + nama + "%'", con);
@@ -592,12 +551,6 @@ namespace Service_Projek
             }
             return list;
         }
-=======
-            string query = string.Format("DELETE FROM Transaksi WHERE ID_Transaksi=" + id);
-
-            dataBarang DataTransaksi = new dataBarang();
-           SqlCommand cmd = new SqlCommand(query, con);
->>>>>>> 8bfc965dbc678919c4bd13e4c41a22b15a28be0b
 
         public List<dataView> GetSemuaTransaksiViewId(string id)
         {
