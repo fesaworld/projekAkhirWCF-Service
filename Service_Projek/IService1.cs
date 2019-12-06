@@ -113,11 +113,19 @@ namespace Service_Projek
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "getuser/nama={Nama}"
           )]
+<<<<<<< HEAD
         dataPengguna GetUser(string nama);
 
         [OperationContract]
         [WebInvoke(
           Method = "GET",
+=======
+        dataUser GetUser(string Nama);
+
+        [OperationContract]
+        [WebInvoke(
+          Method = "POST",
+>>>>>>> 8bfc965dbc678919c4bd13e4c41a22b15a28be0b
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "cariid/hp={Hp}"
@@ -155,7 +163,7 @@ namespace Service_Projek
 
         [OperationContract]
         [WebInvoke(
-          Method = "PUT",
+          Method = "POST",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "addtransaksi"
