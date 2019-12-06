@@ -93,6 +93,7 @@ namespace Service_Projek
           )]
         void HapusBarang(string id);
 
+        //----------------------------------------------------
         //ADMIN
         [OperationContract]
         [WebInvoke(
@@ -103,24 +104,34 @@ namespace Service_Projek
           )]
         dataAdmin GetAdmin(string nama);
 
+        //----------------------------------------------------
         //USER
         [OperationContract]
         [WebInvoke(
           Method = "GET",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "getuser/id={Id}"
+           UriTemplate = "getuser/nama={Nama}"
           )]
-        dataUser GetUser(string id);
+        dataPengguna GetUser(string nama);
 
         [OperationContract]
         [WebInvoke(
-          Method = "PUT",
+          Method = "GET",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "cariid/hp={Hp}"
+          )]
+        int updatehp (string hp);
+
+        [OperationContract]
+        [WebInvoke(
+          Method = "POST",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "adduser"
           )]
-        string AddUser(dataUser du);
+        string AddUser(dataPengguna du);
 
         [OperationContract]
         [WebInvoke(
@@ -129,27 +140,10 @@ namespace Service_Projek
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "updateuser"
           )]
-        string UpdateUser(dataUser du);
+        string UpdateUser(dataPengguna du);
 
-        [OperationContract]
-        [WebInvoke(
-          Method = "POST",
-           RequestFormat = WebMessageFormat.Json,
-           ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "deleteuser/id={Id}"
-          )]
-        string HapusUser(string id);
-
+        //----------------------------------------------------
         //TRANSAKSI
-        [OperationContract]
-        [WebInvoke(
-           Method = "GET",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "getalltransaksi"
-           )]
-        List<dataTransaksi> GetSemuaTransaksi();
-
         [OperationContract]
         [WebInvoke(
           Method = "GET",
@@ -170,21 +164,48 @@ namespace Service_Projek
 
         [OperationContract]
         [WebInvoke(
-          Method = "POST",
+           Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getalltransaksiview"
+           )]
+        List<dataView> GetSemuaTransaksiView();
+
+        [OperationContract]
+        [WebInvoke(
+           Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getalltransaksiviewnama/nama={Nama}"
+           )]
+        List<dataView> GetSemuaTransaksiViewUser(string nama);
+
+        [OperationContract]
+        [WebInvoke(
+           Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getalltransaksiviewid/id={Id}"
+           )]
+        List<dataView> GetSemuaTransaksiViewId(string id);
+
+        [OperationContract]
+        [WebInvoke(
+            Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getalltransaksiviewstatus/status={status}"
+           )]
+        List<dataView> GetSemuaTransaksiViewStatus(string status);
+
+        [OperationContract]
+        [WebInvoke(
+           Method = "POST",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "updatetransaksi"
           )]
-        string UpdateTransaksi(dataTransaksi dt);
-
-        [OperationContract]
-        [WebInvoke(
-          Method = "POST",
-           RequestFormat = WebMessageFormat.Json,
-           ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "deletetransaksi"
-          )]
-        string HapusTransaksi(string id);
+        void UpdateTransaksi(dataTransaksi dt);
     }
         
     [DataContract]
@@ -199,7 +220,7 @@ namespace Service_Projek
     }
 
     [DataContract]
-    public class dataUser
+    public class dataPengguna
     {
         [DataMember]
         public int ID_User { get; set; }
@@ -229,7 +250,7 @@ namespace Service_Projek
         [DataMember]
         public int Stok { get; set; }
         [DataMember]
-        public byte Foto { get; set; }
+        public string Foto { get; set; }
     }
 
     [DataContract]
@@ -247,6 +268,29 @@ namespace Service_Projek
         public int Total_Harga { get; set; }
         [DataMember]
         public DateTime Tanggal_Transaksi { get; set; }
+        [DataMember]
+        public string Status { get; set; }
+    }
+
+    [DataContract]
+    public class dataView
+    {
+        [DataMember]
+        public int ID_Transaksi { get; set; }
+        [DataMember]
+        public string Nama_User { get; set; }
+        [DataMember]
+        public string Nama_Barang { get; set; }
+        [DataMember]
+        public string Nama_Admin { get; set; }
+        [DataMember]
+        public int Total_Harga { get; set; }
+        [DataMember]
+        public DateTime Tanggal_Transaksi { get; set; }
+        [DataMember]
+        public string No_Telpon { get; set; }
+        [DataMember]
+        public string Alamat { get; set; }
         [DataMember]
         public string Status { get; set; }
     }
