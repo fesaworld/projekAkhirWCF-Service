@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -92,6 +93,24 @@ namespace Service_Projek
            UriTemplate = "deletebarang/id={Id}"
           )]
         void HapusBarang(string id);
+
+        [OperationContract]
+        [WebInvoke(
+          Method = "GET",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "getgambar/id={Id}"
+          )]
+        dataBarangFoto GetGambar(string id);
+
+        [OperationContract]
+        [WebInvoke(
+          Method = "GET",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "getgambarstring/id={Id}"
+          )]
+        string GetGambarString(string id);
 
         //----------------------------------------------------
         //ADMIN
@@ -249,6 +268,13 @@ namespace Service_Projek
         public int Harga { get; set; }
         [DataMember]
         public int Stok { get; set; }
+        [DataMember]
+        public string Foto { get; set; }
+    }
+
+    [DataContract]
+    public class dataBarangFoto
+    {
         [DataMember]
         public string Foto { get; set; }
     }
