@@ -35,7 +35,6 @@ namespace Service_Projek
                         barang.Merek = reader.GetString(3);
                         barang.Harga = reader.GetInt32(4);
                         barang.Stok = reader.GetInt32(5);
-                        //barang.Foto = reader.GetString(6);
                         list.Add(barang);
                     }
                     con.Close();
@@ -63,11 +62,12 @@ namespace Service_Projek
                 barang.Merek = reader.GetString(3);
                 barang.Harga = reader.GetInt32(4);
                 barang.Stok = reader.GetInt32(5);
-                //barang.Foto = reader.GetString(6);
+                barang.Foto = reader.GetString(6);
             }
             con.Close();
             return barang;
         }
+
 
         public List<dataBarang> GetBarangNama(string nama)
         {
@@ -89,7 +89,6 @@ namespace Service_Projek
                         barang.Merek = reader.GetString(3);
                         barang.Harga = reader.GetInt32(4);
                         barang.Stok = reader.GetInt32(5);
-                        //barang.Foto = reader.GetString(6);
                         list.Add(barang);
                     }
                     con.Close();
@@ -122,7 +121,6 @@ namespace Service_Projek
                         barang.Merek = reader.GetString(3);
                         barang.Harga = reader.GetInt32(4);
                         barang.Stok = reader.GetInt32(5);
-                        //barang.Foto = reader.GetString(6);
                         list.Add(barang);
                     }
                     con.Close();
@@ -155,7 +153,6 @@ namespace Service_Projek
                         barang.Merek = reader.GetString(3);
                         barang.Harga = reader.GetInt32(4);
                         barang.Stok = reader.GetInt32(5);
-                        //barang.Foto = reader.GetString(6);
                         list.Add(barang);
                     }
                     con.Close();
@@ -189,7 +186,6 @@ namespace Service_Projek
                         barang.Merek = reader.GetString(3);
                         barang.Harga = reader.GetInt32(4);
                         barang.Stok = reader.GetInt32(5);
-                        //barang.Foto = reader.GetString(6);
                         list.Add(barang);
                     }
                     con.Close();
@@ -204,14 +200,6 @@ namespace Service_Projek
 
         public void AddBarang(dataBarang db)
         {
-            //byte[] gambar = db.Foto;
-
-            //Image image = Image.FromFile(txtGambarPath.Text);
-            //ImageConverter conv = new ImageConverter();
-            //byte[] bitimg = (byte[])conv.ConvertTo(image, typeof(byte[]));
-            //string foto = Convert.ToBase64String(gambar);
-
-
             string query = string.Format("insert into Barang values ('{0}', '{1}', '{2}', {3}, {4}, '{5}')", db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok, db.Foto);
 
             dataBarang DataBarang = new dataBarang();
@@ -226,6 +214,32 @@ namespace Service_Projek
         public void UpdateBarang(dataBarang db)
         {
             string query = string.Format("update Barang set Nama_Barang='{1}', Jenis_Barang='{2}', Merek='{3}', Harga={4}, Stok={5}, Foto='{6}' where ID_Barang={0} ", db.ID_Barang, db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok, db.Foto);
+
+            dataBarang DataBarangdpp = new dataBarang();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public void UpdateBarangNoFoto(dataBarang db)
+        {
+            string query = string.Format("update Barang set Nama_Barang='{1}', Jenis_Barang='{2}', Merek='{3}', Harga={4}, Stok={5} where ID_Barang={0} ", db.ID_Barang, db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok);
+
+            dataBarang DataBarangdpp = new dataBarang();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public void UpdateStokBarang(dataBarang db)
+        {
+            string query = string.Format("update Barang set Stok={1} where ID_Barang={0} ", db.ID_Barang, db.Stok);
 
             dataBarang DataBarangdpp = new dataBarang();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
@@ -262,118 +276,6 @@ namespace Service_Projek
             return image;
         }
 
-        public dataBarangFoto GetGambar(string id)
-        {
-
-            dataBarangFoto dp = new dataBarangFoto();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-            SqlCommand cmd = new SqlCommand("select * from Barang where ID_Barang=" + id, con);
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                dp.Foto = reader.GetString(6);
-            }
-            con.Close();
-            return dp;
-
-            //List<dataBarangFoto> list = new List<dataBarangFoto>();
-            //SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-            //SqlCommand cmd = new SqlCommand("select * from Barang where ID_Barang=" + id, con);
-            //try
-            //{
-            //    con.Open();
-            //    SqlDataReader reader = cmd.ExecuteReader();
-            //    if (reader.HasRows)
-            //    {
-            //        while (reader.Read())
-            //        {
-            //            dataBarangFoto barang = new dataBarangFoto();
-            //            list.Add(barang);
-            //        }
-            //        con.Close();
-            //    }
-
-            //    SqlDataAdapter da = new SqlDataAdapter(cmd);
-
-            //    DataSet ds = new DataSet();
-
-            //    da.Fill(ds);
-
-            //    while (reader.Read())
-            //    {
-            //        dataBarangFoto barang = new dataBarangFoto();
-            //        barang.Foto = reader.GetBytes(1, 1, (byte[])ds.Tables[0].Rows[0]["Foto"], 0, Convert.ToInt32(5000));
-
-            //        //pictureBox1.Image = new Bitmap(ms);
-
-            //    }
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.ToString());
-            //}
-            //return list;
-
-            //var con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-
-            //con.Open();
-
-            //var cmd = new SqlCommand("select * from Barang where ID_Barang = " + id, con);
-
-            //SqlDataAdapter da = new SqlDataAdapter(cmd);
-
-            //DataSet ds = new DataSet();
-
-            //da.Fill(ds);
-
-            ////MemoryStream ms = new MemoryStream();
-
-            ////Image image;
-            //string foto = "";
-
-            ////ImageConverter conv = new ImageConverter();
-            ////byte[] bitimg;
-
-            ////bitimg = (byte[])conv.ConvertTo(image, typeof(byte[]));
-
-            //if (ds.Tables[0].Rows.Count > 0)
-            //{
-            //    //ms = new MemoryStream((byte[])ds.Tables[0].Rows[0]["Foto"]);
-
-            //    //image = Image.FromStream(ms);
-
-            //    foto = Convert.ToBase64String((byte[])ds.Tables[0].Rows[0]["Foto"]);
-
-            //}
-            //return foto;
-
-        }
-
-        public string GetGambarString(string id)
-        {
-            string getimg = "";
-            //var con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-
-            //con.Open();
-            //byte[] getImg = new byte[0];
-            
-            //SqlCommand cmd = new SqlCommand("select * from Barang where ID_Barang = " + id , con);
-            //SqlDataAdapter da = new SqlDataAdapter(cmd);
-            //DataSet ds = new DataSet();
-            //da.Fill(ds);
-            //foreach (DataRow dr in ds.Tables[0].Rows)
-            //{
-            //    getImg = (byte[])dr["foto"];
-            //}
-
-            //byte[] imgData = getImg;
-            ////MemoryStream stream = new MemoryStream(imgData);
-            ////pictureBox1.Image = Image.FromStream(stream);
-            //string cek = new string(imgData);
-            return getimg;
-        }
 
         //ADMIN
         public dataAdmin GetAdmin(string nama)
@@ -439,34 +341,25 @@ namespace Service_Projek
             return hp;
         }
 
-        public string AddUser(dataPengguna du)
+        public void AddUser(dataPengguna du)
         {
-            string query = string.Format("insert into pengguna([Nama_User],[Password],[Alamat],[No_Telpon]) values('{0}','{1}','{2}','{3}')", du.Nama_User, du.Password, du.Alamat, du.No_Telpon);
+            string query = string.Format("insert into Pengguna values('{0}','{1}','{2}','{3}')", du.Nama_User, du.Password, du.Alamat, du.No_Telpon);
 
             dataPengguna DataUser = new dataPengguna();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Rest;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa; Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
 
-            try
-            {
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-                return "Data Berhasil Di Tambahkan";
-            }
-            catch (Exception ex)
-            {
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
 
-                return "Data Gagal Ditambahkan : " + ex.ToString();
-            }
         }
-
         public string UpdateUser(dataPengguna du)
         {
             string query = string.Format("update Pengguna set Nama_User='{1}', Password='{2}', Alamat='{3}', No_Telpon='{4}' where ID_User={0} ", du.ID_User, du.Nama_User, du.Password, du.Alamat, du.No_Telpon);
 
             dataPengguna DataUser = new dataPengguna();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Rest;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
 
             try
@@ -553,26 +446,31 @@ namespace Service_Projek
             return list;
         }
 
-        public string AddTransaksi(dataTransaksi dt)
+        public void addtrans(dataTransaksi dt)
         {
-            string query = string.Format("insert into Transaksi values({0},{1},{2},{3},{4},{5},{6})", dt.ID_Transaksi, dt.ID_User, dt.ID_Barang, dt.ID_Admin, dt.Total_Harga, dt.Tanggal_Transaksi, dt.Status);
+            string query = string.Format("insert into Transaksi values ({0},{1},{2},{3},'{4}','{5}')", dt.ID_User, dt.ID_Barang, dt.ID_Admin, dt.Total_Harga, dt.Tanggal_Transaksi, dt.Status);
 
-            dataTransaksi DataTransaksi = new dataTransaksi();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Rest;Persist Security Info=True;User ID=sa;Password=123456");
+            dataBarang DataBarang = new dataBarang();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
 
-            try
-            {
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public string AddTransaksi(dataTransaksi dt)
+        {
+            string query = string.Format("insert into Transaksi values ({0},{1},{2},{3},{4},'{5}','{6}')", dt.ID_Transaksi, dt.ID_User, dt.ID_Barang, dt.ID_Admin, dt.Total_Harga, dt.Tanggal_Transaksi, dt.Status);
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            dataTransaksi DataTransaksi = new dataTransaksi();
+            SqlCommand cmd = new SqlCommand(query, con);
+
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
                 return "Data Berhasil Di Tambahkan";
-            }
-            catch (Exception ex)
-            {
 
-                return "Data Gagal Ditambahkan : " + ex.ToString();
-            }
         }
 
         //VIEW TRANSAKSI
@@ -727,19 +625,156 @@ namespace Service_Projek
             con.Open();
             cmd.ExecuteNonQuery();
             con.Close();
+        }
 
-            //try
-            //{
-            //    con.Open();
-            //    cmd.ExecuteNonQuery();
-            //    con.Close();
-            //    return "Berhasil Di Update";
-            //}
-            //catch (Exception ex)
-            //{
+        //Service Buat Ujian Mandiri
+        public List<dataViewManual> GetSemuaTransaksiManual()
+        {
+            List<dataViewManual> list = new List<dataViewManual>();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand("select * from ViewTransaksi", con);
 
-            //    return "Gagal Di Update :" + ex.ToString();
-            //}
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    dataViewManual manual = new dataViewManual();
+                    manual.ID_Transaksi = reader.GetInt32(0);
+                    manual.Nama_User = reader.GetString(1);
+                    manual.Nama_Barang = reader.GetString(2);
+                    manual.Nama_Admin = reader.GetString(3);
+                    manual.Total_Harga = reader.GetInt32(4);
+                    manual.Tanggal_Transaksi = reader.GetDateTime(5);
+                    manual.Alamat = reader.GetString(6);
+                    manual.No_Telpon = reader.GetString(7);
+                    manual.Status = reader.GetString(8);
+                    manual.Foto = reader.GetString(9);
+                    list.Add(manual);
+                }
+                con.Close();
+            }
+           
+            return list;
+        }
+
+        public List<dataBarang> GetBarangNamaManual(string nama)
+        {
+            List<dataBarang> list = new List<dataBarang>();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand("select * from Barang where Nama_Barang LIKE '%" + nama + "%'", con);
+
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    dataBarang barang = new dataBarang();
+                    barang.ID_Barang = reader.GetInt32(0);
+                    barang.Nama_Barang = reader.GetString(1);
+                    barang.Jenis_Barang = reader.GetString(2);
+                    barang.Merek = reader.GetString(3);
+                    barang.Harga = reader.GetInt32(4);
+                    barang.Stok = reader.GetInt32(5);
+                    barang.Foto = reader.GetString(6);
+                    list.Add(barang);
+                }
+                con.Close();
+            }
+
+            return list;
+        }
+
+        public List<dataPengguna> GetSemuaUserManual()
+        {
+            List<dataPengguna> list = new List<dataPengguna>();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand("select * from Pengguna", con);
+
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    dataPengguna pengguna = new dataPengguna();
+                    pengguna.ID_User = reader.GetInt32(0);
+                    pengguna.Nama_User = reader.GetString(1);
+                    pengguna.Password = reader.GetString(2);
+                    pengguna.Alamat = reader.GetString(3);
+                    pengguna.No_Telpon = reader.GetString(4);
+                    list.Add(pengguna);
+                }
+                con.Close();
+            }
+
+            return list;
+        }
+
+        public List<dataPengguna> GetUserNamaManual(string nama)
+        {
+            List<dataPengguna> list = new List<dataPengguna>();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Pengguna where Nama_User LIKE '%" + nama + "%'", con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                dataPengguna pengguna = new dataPengguna();
+                pengguna.ID_User = reader.GetInt32(0);
+                pengguna.Nama_User = reader.GetString(1);
+                pengguna.Password = reader.GetString(2);
+                pengguna.Alamat = reader.GetString(3);
+                pengguna.No_Telpon = reader.GetString(4);
+                list.Add(pengguna);
+            }
+            con.Close();
+
+            return list;
+        }
+
+        public List<dataBarang> GetSemuaBarangManual()
+        {
+            List<dataBarang> list = new List<dataBarang>();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand("select * from Barang", con);
+
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    dataBarang barang = new dataBarang();
+                    barang.ID_Barang = reader.GetInt32(0);
+                    barang.Nama_Barang = reader.GetString(1);
+                    barang.Jenis_Barang = reader.GetString(2);
+                    barang.Merek = reader.GetString(3);
+                    barang.Harga = reader.GetInt32(4);
+                    barang.Stok = reader.GetInt32(5);
+                    list.Add(barang);
+                }
+                con.Close();
+            }
+
+            return list;
+        }
+
+        public void AddTransaksiManual(dataTransaksi dt)
+        {
+            string query = string.Format("insert into Transaksi values ({0},{1},{2},{3},{4},'{5}','{6}')", dt.ID_Transaksi, dt.ID_User, dt.ID_Barang, dt.ID_Admin, dt.Total_Harga, dt.Tanggal_Transaksi, dt.Status);
+
+            dataTransaksi DataTransaksi = new dataTransaksi();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
         }
     }
 }

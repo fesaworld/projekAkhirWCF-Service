@@ -87,30 +87,30 @@ namespace Service_Projek
 
         [OperationContract]
         [WebInvoke(
+           Method = "POST",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "updatebarangnofoto"
+          )]
+        void UpdateBarangNoFoto(dataBarang db);
+
+        [OperationContract]
+        [WebInvoke(
+           Method = "POST",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "updatestokbarang"
+          )]
+        void UpdateStokBarang(dataBarang db);
+
+        [OperationContract]
+        [WebInvoke(
           Method = "POST",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "deletebarang/id={Id}"
           )]
         void HapusBarang(string id);
-
-        [OperationContract]
-        [WebInvoke(
-          Method = "GET",
-           RequestFormat = WebMessageFormat.Json,
-           ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "getgambar/id={Id}"
-          )]
-        dataBarangFoto GetGambar(string id);
-
-        [OperationContract]
-        [WebInvoke(
-          Method = "GET",
-           RequestFormat = WebMessageFormat.Json,
-           ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "getgambarstring/id={Id}"
-          )]
-        string GetGambarString(string id);
 
         //----------------------------------------------------
         //ADMIN
@@ -150,7 +150,7 @@ namespace Service_Projek
            ResponseFormat = WebMessageFormat.Json,
            UriTemplate = "adduser"
           )]
-        string AddUser(dataPengguna du);
+        void AddUser(dataPengguna du);
 
         [OperationContract]
         [WebInvoke(
@@ -174,13 +174,32 @@ namespace Service_Projek
 
         [OperationContract]
         [WebInvoke(
-          Method = "PUT",
+           Method = "POST",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "addtransaksi"
+           UriTemplate = "adtransaksi"
           )]
         string AddTransaksi(dataTransaksi dt);
 
+        [OperationContract]
+        [WebInvoke(
+           Method = "POST",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "addtrans"
+          )]
+        void addtrans(dataTransaksi dt);
+
+        [OperationContract]
+        [WebInvoke(
+           Method = "POST",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "updatetransaksi"
+          )]
+        void UpdateTransaksi(dataTransaksi dt);
+
+        //View Transaksi
         [OperationContract]
         [WebInvoke(
            Method = "GET",
@@ -217,14 +236,60 @@ namespace Service_Projek
            )]
         List<dataView> GetSemuaTransaksiViewStatus(string status);
 
+        //Service Buat Transaksi Manual
+        [OperationContract]
+        [WebInvoke(
+            Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getalltransaksiviewmanual"
+           )]
+        List<dataViewManual> GetSemuaTransaksiManual();
+
+        [OperationContract]
+        [WebInvoke(
+          Method = "GET",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "getbarangnamamanual/nama={Nama}"
+          )]
+        List<dataBarang> GetBarangNamaManual(string nama);
+
+        [OperationContract]
+        [WebInvoke(
+           Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getallusermanual"
+           )]
+        List<dataPengguna> GetSemuaUserManual();
+
+        [OperationContract]
+        [WebInvoke(
+          Method = "GET",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "getusernamamanual/nama={Nama}"
+          )]
+        List<dataPengguna> GetUserNamaManual(string nama);
+
+        [OperationContract]
+        [WebInvoke(
+           Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getallbarangmanual"
+           )]
+        List<dataBarang> GetSemuaBarangManual();
+
         [OperationContract]
         [WebInvoke(
            Method = "POST",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "updatetransaksi"
+           UriTemplate = "addtransaksimanual"
           )]
-        void UpdateTransaksi(dataTransaksi dt);
+        void AddTransaksiManual(dataTransaksi dt);
     }
 
     [DataContract]
@@ -273,13 +338,6 @@ namespace Service_Projek
     }
 
     [DataContract]
-    public class dataBarangFoto
-    {
-        [DataMember]
-        public string Foto { get; set; }
-    }
-
-    [DataContract]
     public class dataTransaksi
     {
         [DataMember]
@@ -319,5 +377,30 @@ namespace Service_Projek
         public string Alamat { get; set; }
         [DataMember]
         public string Status { get; set; }
+    }
+
+    [DataContract]
+    public class dataViewManual
+    {
+        [DataMember]
+        public int ID_Transaksi { get; set; }
+        [DataMember]
+        public string Nama_User { get; set; }
+        [DataMember]
+        public string Nama_Barang { get; set; }
+        [DataMember]
+        public string Nama_Admin { get; set; }
+        [DataMember]
+        public int Total_Harga { get; set; }
+        [DataMember]
+        public DateTime Tanggal_Transaksi { get; set; }
+        [DataMember]
+        public string No_Telpon { get; set; }
+        [DataMember]
+        public string Alamat { get; set; }
+        [DataMember]
+        public string Status { get; set; }
+        [DataMember]
+        public string Foto { get; set; }
     }
 }
