@@ -769,7 +769,7 @@ namespace Service_Projek
             string query = string.Format("insert into Transaksi values ({0},{1},{2},{3},{4},'{5}','{6}')", dt.ID_Transaksi, dt.ID_User, dt.ID_Barang, dt.ID_Admin, dt.Total_Harga, dt.Tanggal_Transaksi, dt.Status);
 
             dataTransaksi DataTransaksi = new dataTransaksi();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456" );
             SqlCommand cmd = new SqlCommand(query, con);
 
             con.Open();
