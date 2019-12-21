@@ -166,38 +166,6 @@ namespace Service_Projek
 
         }
 
-        public List<dataBarang> GetBarangNamaJenisMerek(string nama, string jenis, string merek)
-        {
-            List<dataBarang> list = new List<dataBarang>();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-            SqlCommand cmd = new SqlCommand("select * from Barang where Nama_Barang LIKE '%" + nama + "%' and Jenis_Barang LIKE '%" + jenis + "%' and Merek LIKE '%" + merek + "%'", con);
-            try
-            {
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        dataBarang barang = new dataBarang();
-                        barang.ID_Barang = reader.GetInt32(0);
-                        barang.Nama_Barang = reader.GetString(1);
-                        barang.Jenis_Barang = reader.GetString(2);
-                        barang.Merek = reader.GetString(3);
-                        barang.Harga = reader.GetInt32(4);
-                        barang.Stok = reader.GetInt32(5);
-                        list.Add(barang);
-                    }
-                    con.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            return list;
-        }
-
         public void AddBarang(dataBarang db)
         {
             string query = string.Format("insert into Barang values ('{0}', '{1}', '{2}', {3}, {4}, '{5}')", db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok, db.Foto);
@@ -227,19 +195,6 @@ namespace Service_Projek
         public void UpdateBarangNoFoto(dataBarang db)
         {
             string query = string.Format("update Barang set Nama_Barang='{1}', Jenis_Barang='{2}', Merek='{3}', Harga={4}, Stok={5} where ID_Barang={0} ", db.ID_Barang, db.Nama_Barang, db.Jenis_Barang, db.Merek, db.Harga, db.Stok);
-
-            dataBarang DataBarangdpp = new dataBarang();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-            SqlCommand cmd = new SqlCommand(query, con);
-
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
-        }
-
-        public void UpdateStokBarang(dataBarang db)
-        {
-            string query = string.Format("update Barang set Stok={1} where ID_Barang={0} ", db.ID_Barang, db.Stok);
 
             dataBarang DataBarangdpp = new dataBarang();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
@@ -397,7 +352,7 @@ namespace Service_Projek
                         transaksi.ID_Barang = reader.GetInt32(2);
                         transaksi.ID_Admin = reader.GetInt32(3);
                         transaksi.Total_Harga = reader.GetInt32(4);
-                        //transaksi.Tanggal_Transaksi = reader.GetDateTime(5);
+                        transaksi.Tanggal_Transaksi = reader.GetString(5);
                         transaksi.Status = reader.GetString(6);
                         list.Add(transaksi);
                     }
@@ -446,7 +401,7 @@ namespace Service_Projek
             return list;
         }
 
-        public void addtrans(dataTransaksi dt)
+        public void AddTransaksi(dataTransaksi dt)
         {
             string query = string.Format("insert into Transaksi values ({0},{1},{2},{3},'{4}','{5}')", dt.ID_User, dt.ID_Barang, dt.ID_Admin, dt.Total_Harga, dt.Tanggal_Transaksi, dt.Status);
 
@@ -457,20 +412,6 @@ namespace Service_Projek
             con.Open();
             cmd.ExecuteNonQuery();
             con.Close();
-        }
-
-        public string AddTransaksi(dataTransaksi dt)
-        {
-            string query = string.Format("insert into Transaksi values ({0},{1},{2},{3},{4},'{5}','{6}')", dt.ID_Transaksi, dt.ID_User, dt.ID_Barang, dt.ID_Admin, dt.Total_Harga, dt.Tanggal_Transaksi, dt.Status);
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-            dataTransaksi DataTransaksi = new dataTransaksi();
-            SqlCommand cmd = new SqlCommand(query, con);
-
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-                return "Data Berhasil Di Tambahkan";
-
         }
 
         //VIEW TRANSAKSI
@@ -628,35 +569,38 @@ namespace Service_Projek
         }
 
         //Service Buat Ujian Mandiri
-        public List<dataViewManual> GetSemuaTransaksiManual()
+        public List<dataView> GetSemuaTransaksiManual()
         {
-            List<dataViewManual> list = new List<dataViewManual>();
+            List<dataView> list = new List<dataView>();
             SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand("select * from ViewTransaksi", con);
-
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            if (reader.HasRows)
+            try
             {
-                while (reader.Read())
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
                 {
-                    dataViewManual manual = new dataViewManual();
-                    manual.ID_Transaksi = reader.GetInt32(0);
-                    manual.Nama_User = reader.GetString(1);
-                    manual.Nama_Barang = reader.GetString(2);
-                    manual.Nama_Admin = reader.GetString(3);
-                    manual.Total_Harga = reader.GetInt32(4);
-                    manual.Tanggal_Transaksi = reader.GetString(5);
-                    manual.Alamat = reader.GetString(6);
-                    manual.No_Telpon = reader.GetString(7);
-                    manual.Status = reader.GetString(8);
-                    manual.Foto = reader.GetString(9);
-                    list.Add(manual);
+                    while (reader.Read())
+                    {
+                        dataView view = new dataView();
+                        view.ID_Transaksi = reader.GetInt32(0);
+                        view.Nama_User = reader.GetString(1);
+                        view.Nama_Barang = reader.GetString(2);
+                        view.Nama_Admin = reader.GetString(3);
+                        view.Total_Harga = reader.GetInt32(4);
+                        view.Tanggal_Transaksi = reader.GetString(5);
+                        view.Alamat = reader.GetString(6);
+                        view.No_Telpon = reader.GetString(7);
+                        view.Status = reader.GetString(8);
+                        list.Add(view);
+                    }
+                    con.Close();
                 }
-                con.Close();
             }
-           
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             return list;
         }
 

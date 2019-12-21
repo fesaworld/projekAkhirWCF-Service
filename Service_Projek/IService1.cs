@@ -60,15 +60,6 @@ namespace Service_Projek
 
         [OperationContract]
         [WebInvoke(
-          Method = "GET",
-           RequestFormat = WebMessageFormat.Json,
-           ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "getbarangnamajenismerek/nama={Nama}/jenis={Jenis}/merek={Merek}"
-          )]
-        List<dataBarang> GetBarangNamaJenisMerek(string nama, string jenis, string merek);
-
-        [OperationContract]
-        [WebInvoke(
           Method = "POST",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
@@ -93,15 +84,6 @@ namespace Service_Projek
            UriTemplate = "updatebarangnofoto"
           )]
         void UpdateBarangNoFoto(dataBarang db);
-
-        [OperationContract]
-        [WebInvoke(
-           Method = "POST",
-           RequestFormat = WebMessageFormat.Json,
-           ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "updatestokbarang"
-          )]
-        void UpdateStokBarang(dataBarang db);
 
         [OperationContract]
         [WebInvoke(
@@ -177,18 +159,9 @@ namespace Service_Projek
            Method = "POST",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "adtransaksi"
+           UriTemplate = "addtransaksi"
           )]
-        string AddTransaksi(dataTransaksi dt);
-
-        [OperationContract]
-        [WebInvoke(
-           Method = "POST",
-           RequestFormat = WebMessageFormat.Json,
-           ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "addtrans"
-          )]
-        void addtrans(dataTransaksi dt);
+        void AddTransaksi(dataTransaksi dt);
 
         [OperationContract]
         [WebInvoke(
@@ -236,25 +209,11 @@ namespace Service_Projek
            )]
         List<dataView> GetSemuaTransaksiViewStatus(string status);
 
+        //---------------------------------------------------------
         //Service Buat Transaksi Manual
-        [OperationContract]
-        [WebInvoke(
-            Method = "GET",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "getalltransaksiviewmanual"
-           )]
-        List<dataViewManual> GetSemuaTransaksiManual();
+        //---------------------------------------------------------
 
-        [OperationContract]
-        [WebInvoke(
-          Method = "GET",
-           RequestFormat = WebMessageFormat.Json,
-           ResponseFormat = WebMessageFormat.Json,
-           UriTemplate = "getbarangnamamanual/nama={Nama}"
-          )]
-        List<dataBarang> GetBarangNamaManual(string nama);
-
+        // Untuk Get Data User
         [OperationContract]
         [WebInvoke(
            Method = "GET",
@@ -273,6 +232,7 @@ namespace Service_Projek
           )]
         List<dataPengguna> GetUserNamaManual(string nama);
 
+        // Untuk Get Data Barang
         [OperationContract]
         [WebInvoke(
            Method = "GET",
@@ -282,6 +242,16 @@ namespace Service_Projek
            )]
         List<dataBarang> GetSemuaBarangManual();
 
+        [OperationContract]
+        [WebInvoke(
+          Method = "GET",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "getbarangnamamanual/nama={Nama}"
+          )]
+        List<dataBarang> GetBarangNamaManual(string nama);
+
+        //Untuk Add, Delete & Update Transaksi
         [OperationContract]
         [WebInvoke(
            Method = "POST",
@@ -308,6 +278,16 @@ namespace Service_Projek
            UriTemplate = "updatetransaksimanual"
           )]
         void UpdateTransaksiManual(dataTransaksi dt);
+
+        //Untuk Get Data Dari View Transaksi
+        [OperationContract]
+        [WebInvoke(
+            Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getalltransaksiviewmanual"
+           )]
+        List<dataView> GetSemuaTransaksiManual();
 
         [OperationContract]
         [WebInvoke(
@@ -422,30 +402,5 @@ namespace Service_Projek
         public string Alamat { get; set; }
         [DataMember]
         public string Status { get; set; }
-    }
-
-    [DataContract]
-    public class dataViewManual
-    {
-        [DataMember]
-        public int ID_Transaksi { get; set; }
-        [DataMember]
-        public string Nama_User { get; set; }
-        [DataMember]
-        public string Nama_Barang { get; set; }
-        [DataMember]
-        public string Nama_Admin { get; set; }
-        [DataMember]
-        public int Total_Harga { get; set; }
-        [DataMember]
-        public string Tanggal_Transaksi { get; set; }
-        [DataMember]
-        public string No_Telpon { get; set; }
-        [DataMember]
-        public string Alamat { get; set; }
-        [DataMember]
-        public string Status { get; set; }
-        [DataMember]
-        public string Foto { get; set; }
     }
 }
