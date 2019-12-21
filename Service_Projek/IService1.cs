@@ -290,6 +290,51 @@ namespace Service_Projek
            UriTemplate = "addtransaksimanual"
           )]
         void AddTransaksiManual(dataTransaksi dt);
+
+        [OperationContract]
+        [WebInvoke(
+          Method = "POST",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "deletetransaksimanual/id={Id}"
+          )]
+        void HapusTransaksiManual(string id);
+
+        [OperationContract]
+        [WebInvoke(
+           Method = "POST",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           UriTemplate = "updatetransaksimanual"
+          )]
+        void UpdateTransaksiManual(dataTransaksi dt);
+
+        [OperationContract]
+        [WebInvoke(
+           Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getalltransaksiviewnamamanual/nama={Nama}"
+           )]
+        List<dataView> GetSemuaTransaksiViewUserManual(string nama);
+
+        [OperationContract]
+        [WebInvoke(
+           Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getalltransaksiviewidmanual/id={Id}"
+           )]
+        List<dataView> GetSemuaTransaksiViewIdManual(string id);
+
+        [OperationContract]
+        [WebInvoke(
+            Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "getalltransaksiviewstatusmanual/status={status}"
+           )]
+        List<dataView> GetSemuaTransaksiViewStatusManual(string status);
     }
 
     [DataContract]
@@ -351,7 +396,7 @@ namespace Service_Projek
         [DataMember]
         public int Total_Harga { get; set; }
         [DataMember]
-        public DateTime Tanggal_Transaksi { get; set; }
+        public string Tanggal_Transaksi { get; set; }
         [DataMember]
         public string Status { get; set; }
     }
@@ -370,7 +415,7 @@ namespace Service_Projek
         [DataMember]
         public int Total_Harga { get; set; }
         [DataMember]
-        public DateTime Tanggal_Transaksi { get; set; }
+        public string Tanggal_Transaksi { get; set; }
         [DataMember]
         public string No_Telpon { get; set; }
         [DataMember]
@@ -393,7 +438,7 @@ namespace Service_Projek
         [DataMember]
         public int Total_Harga { get; set; }
         [DataMember]
-        public DateTime Tanggal_Transaksi { get; set; }
+        public string Tanggal_Transaksi { get; set; }
         [DataMember]
         public string No_Telpon { get; set; }
         [DataMember]

@@ -397,7 +397,7 @@ namespace Service_Projek
                         transaksi.ID_Barang = reader.GetInt32(2);
                         transaksi.ID_Admin = reader.GetInt32(3);
                         transaksi.Total_Harga = reader.GetInt32(4);
-                        transaksi.Tanggal_Transaksi = reader.GetDateTime(5);
+                        //transaksi.Tanggal_Transaksi = reader.GetDateTime(5);
                         transaksi.Status = reader.GetString(6);
                         list.Add(transaksi);
                     }
@@ -430,7 +430,7 @@ namespace Service_Projek
                         transaksi.ID_Barang = reader.GetInt32(2);
                         transaksi.ID_Admin = reader.GetInt32(3);
                         transaksi.Total_Harga = reader.GetInt32(4);
-                        transaksi.Tanggal_Transaksi = reader.GetDateTime(5);
+                        //transaksi.Tanggal_Transaksi = reader.GetDateTime(5);
                         transaksi.Status = reader.GetString(6);
                         list.Add(transaksi);
 
@@ -493,7 +493,7 @@ namespace Service_Projek
                         view.Nama_Barang = reader.GetString(2);
                         view.Nama_Admin = reader.GetString(3);
                         view.Total_Harga = reader.GetInt32(4);
-                        view.Tanggal_Transaksi = reader.GetDateTime(5);
+                        view.Tanggal_Transaksi = reader.GetString(5);
                         view.Alamat = reader.GetString(6);
                         view.No_Telpon = reader.GetString(7);
                         view.Status = reader.GetString(8);
@@ -528,7 +528,7 @@ namespace Service_Projek
                         view.Nama_Barang = reader.GetString(2);
                         view.Nama_Admin = reader.GetString(3);
                         view.Total_Harga = reader.GetInt32(4);
-                        view.Tanggal_Transaksi = reader.GetDateTime(5);
+                        view.Tanggal_Transaksi = reader.GetString(5);
                         view.Alamat = reader.GetString(6);
                         view.No_Telpon = reader.GetString(7);
                         view.Status = reader.GetString(8);
@@ -563,7 +563,7 @@ namespace Service_Projek
                         view.Nama_Barang = reader.GetString(2);
                         view.Nama_Admin = reader.GetString(3);
                         view.Total_Harga = reader.GetInt32(4);
-                        view.Tanggal_Transaksi = reader.GetDateTime(5);
+                        view.Tanggal_Transaksi = reader.GetString(5);
                         view.Alamat = reader.GetString(6);
                         view.No_Telpon = reader.GetString(7);
                         view.Status = reader.GetString(8);
@@ -598,7 +598,7 @@ namespace Service_Projek
                         view.Nama_Barang = reader.GetString(2);
                         view.Nama_Admin = reader.GetString(3);
                         view.Total_Harga = reader.GetInt32(4);
-                        view.Tanggal_Transaksi = reader.GetDateTime(5);
+                        view.Tanggal_Transaksi = reader.GetString(5);
                         view.Alamat = reader.GetString(6);
                         view.No_Telpon = reader.GetString(7);
                         view.Status = reader.GetString(8);
@@ -647,7 +647,7 @@ namespace Service_Projek
                     manual.Nama_Barang = reader.GetString(2);
                     manual.Nama_Admin = reader.GetString(3);
                     manual.Total_Harga = reader.GetInt32(4);
-                    manual.Tanggal_Transaksi = reader.GetDateTime(5);
+                    manual.Tanggal_Transaksi = reader.GetString(5);
                     manual.Alamat = reader.GetString(6);
                     manual.No_Telpon = reader.GetString(7);
                     manual.Status = reader.GetString(8);
@@ -764,17 +764,148 @@ namespace Service_Projek
             return list;
         }
 
-        public void AddTransaksiManual(dataTransaksi dt)
+        public void AddTransaksiManual(dataTransaksi dtt)
         {
-            string query = string.Format("insert into Transaksi values ({0},{1},{2},{3},{4},'{5}','{6}')", dt.ID_Transaksi, dt.ID_User, dt.ID_Barang, dt.ID_Admin, dt.Total_Harga, dt.Tanggal_Transaksi, dt.Status);
+            string query = string.Format("insert into Transaksi values ({0}, {1}, {2}, {3}, '{4}', '{5}')", dtt.ID_User, dtt.ID_Barang, dtt.ID_Admin, dtt.Total_Harga, dtt.Tanggal_Transaksi, dtt.Status);
 
-            dataTransaksi DataTransaksi = new dataTransaksi();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456" );
+            dataTransaksi DaTransaksi = new dataTransaksi();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
             SqlCommand cmd = new SqlCommand(query, con);
 
             con.Open();
             cmd.ExecuteNonQuery();
             con.Close();
+        }
+
+        public void HapusTransaksiManual(string id)
+        {
+            string query = string.Format("DELETE FROM Transaksi WHERE ID_Transaksi=" + id);
+
+            dataBarang DataBarang = new dataBarang();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public void UpdateTransaksiManual(dataTransaksi dt)
+        {
+            string query = string.Format("update Transaksi set ID_User={1}, ID_Barang={2}, ID_Admin={3}, Total_Harga={4}, Tanggal_Transaksi='{5}', Status='{6}' where ID_Transaksi={0}", dt.ID_Transaksi, dt.ID_User, dt.ID_Barang, dt.ID_Admin, dt.Total_Harga, dt.Tanggal_Transaksi, dt.Status);
+
+            dataTransaksi DataTransaksi = new dataTransaksi();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public List<dataView> GetSemuaTransaksiViewUserManual(string nama)
+        {
+            List<dataView> list = new List<dataView>();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand("select * from ViewTransaksi where Nama_User LIKE '%" + nama + "%'", con);
+            try
+            {
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dataView view = new dataView();
+                        view.ID_Transaksi = reader.GetInt32(0);
+                        view.Nama_User = reader.GetString(1);
+                        view.Nama_Barang = reader.GetString(2);
+                        view.Nama_Admin = reader.GetString(3);
+                        view.Total_Harga = reader.GetInt32(4);
+                        view.Tanggal_Transaksi = reader.GetString(5);
+                        view.Alamat = reader.GetString(6);
+                        view.No_Telpon = reader.GetString(7);
+                        view.Status = reader.GetString(8);
+                        list.Add(view);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return list;
+        }
+
+        public List<dataView> GetSemuaTransaksiViewIdManual(string id)
+        {
+            List<dataView> list = new List<dataView>();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand("select * from ViewTransaksi where ID_Transaksi LIKE '%" + id + "%'", con);
+            try
+            {
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dataView view = new dataView();
+                        view.ID_Transaksi = reader.GetInt32(0);
+                        view.Nama_User = reader.GetString(1);
+                        view.Nama_Barang = reader.GetString(2);
+                        view.Nama_Admin = reader.GetString(3);
+                        view.Total_Harga = reader.GetInt32(4);
+                        view.Tanggal_Transaksi = reader.GetString(5);
+                        view.Alamat = reader.GetString(6);
+                        view.No_Telpon = reader.GetString(7);
+                        view.Status = reader.GetString(8);
+                        list.Add(view);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return list;
+        }
+
+        public List<dataView> GetSemuaTransaksiViewStatusManual(string status)
+        {
+            List<dataView> list = new List<dataView>();
+            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            SqlCommand cmd = new SqlCommand("select * from ViewTransaksi where Status LIKE '%" + status + "%'", con);
+            try
+            {
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dataView view = new dataView();
+                        view.ID_Transaksi = reader.GetInt32(0);
+                        view.Nama_User = reader.GetString(1);
+                        view.Nama_Barang = reader.GetString(2);
+                        view.Nama_Admin = reader.GetString(3);
+                        view.Total_Harga = reader.GetInt32(4);
+                        view.Tanggal_Transaksi = reader.GetString(5);
+                        view.Alamat = reader.GetString(6);
+                        view.No_Telpon = reader.GetString(7);
+                        view.Status = reader.GetString(8);
+                        list.Add(view);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return list;
         }
     }
 }
