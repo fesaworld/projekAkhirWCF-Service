@@ -251,6 +251,8 @@ namespace Service_Projek
           )]
         List<dataBarang> GetBarangNamaManual(string nama);
 
+        //---------------------------------------------------------
+
         //Untuk Add, Delete & Update Transaksi
         [OperationContract]
         [WebInvoke(
@@ -402,5 +404,21 @@ namespace Service_Projek
         public string Alamat { get; set; }
         [DataMember]
         public string Status { get; set; }
+    }
+
+    [DataContract]
+    public class ErrorHandling
+    {
+        //Constructor
+        public ErrorHandling(string _code, string _detail)
+        {
+            Code = _code;
+            Detail = _detail;
+        }
+
+        [DataMember]
+        public string Code { get; set; }
+        [DataMember]
+        public string Detail { get; set; }
     }
 }

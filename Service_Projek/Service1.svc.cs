@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.IO;
 using System.Drawing;
+using System.Net;
 
 namespace Service_Projek
 {
@@ -309,6 +310,7 @@ namespace Service_Projek
             con.Close();
 
         }
+
         public string UpdateUser(dataPengguna du)
         {
             string query = string.Format("update Pengguna set Nama_User='{1}', Password='{2}', Alamat='{3}', No_Telpon='{4}' where ID_User={0} ", du.ID_User, du.Nama_User, du.Password, du.Alamat, du.No_Telpon);
@@ -571,11 +573,12 @@ namespace Service_Projek
         //Service Buat Ujian Mandiri
         public List<dataView> GetSemuaTransaksiManual()
         {
-            List<dataView> list = new List<dataView>();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-            SqlCommand cmd = new SqlCommand("select * from ViewTransaksi", con);
             try
             {
+                List<dataView> list = new List<dataView>();
+                SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+                SqlCommand cmd = new SqlCommand("select * from ViewTransaksi", con);
+
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
@@ -596,13 +599,16 @@ namespace Service_Projek
                     }
                     con.Close();
                 }
-            }
+
+                return list;
+        }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                ErrorHandling err = new ErrorHandling(HttpStatusCode.InternalServerError.ToString(), "Owh Terjadi Eror : " + ex.Message);
+
+                throw new WebFaultException<ErrorHandling>(err, System.Net.HttpStatusCode.InternalServerError);
             }
-            return list;
-        }
+}
 
         public List<dataBarang> GetBarangNamaManual(string nama)
         {
@@ -710,15 +716,34 @@ namespace Service_Projek
 
         public void AddTransaksiManual(dataTransaksi dtt)
         {
-            string query = string.Format("insert into Transaksi values ({0}, {1}, {2}, {3}, '{4}', '{5}')", dtt.ID_User, dtt.ID_Barang, dtt.ID_Admin, dtt.Total_Harga, dtt.Tanggal_Transaksi, dtt.Status);
+            //string query = string.Format("insert into Transaksi values ({0}, {1}, {2}, {3}, '{4}', '{5}')", dtt.ID_User, dtt.ID_Barang, dtt.ID_Admin, dtt.Total_Harga, dtt.Tanggal_Transaksi, dtt.Status);
 
-            dataTransaksi DaTransaksi = new dataTransaksi();
-            SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
-            SqlCommand cmd = new SqlCommand(query, con);
+            //dataTransaksi DaTransaksi = new dataTransaksi();
+            //SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+            //SqlCommand cmd = new SqlCommand(query, con);
 
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
+            //con.Open();
+            //cmd.ExecuteNonQuery();
+            //con.Close();
+
+            try
+            {
+                string query = string.Format("insert into Transaksi values ({0}, {1}, {2}, {3}, '{4}', '{5}')", dtt.ID_User, dtt.ID_Barang, dtt.ID_Admin, dtt.Total_Harga, dtt.Tanggal_Transaksi, dtt.Status);
+
+                dataTransaksi DaTransaksi = new dataTransaksi();
+                SqlConnection con = new SqlConnection("Data Source=FESAART-DEKSTOP;Initial Catalog=WCF_Projek-Akhir;Persist Security Info=True;User ID=sa;Password=123456");
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                ErrorHandling err = new ErrorHandling(HttpStatusCode.InternalServerError.ToString(), "Owh Terjadi Eror : " + ex.Message);
+
+                throw new WebFaultException<ErrorHandling>(err, System.Net.HttpStatusCode.InternalServerError);
+            }
         }
 
         public void HapusTransaksiManual(string id)
